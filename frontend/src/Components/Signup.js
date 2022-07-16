@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 const Signup = ()=>{
@@ -6,6 +6,13 @@ const Signup = ()=>{
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        const auth = localStorage.getItem('user');
+        if(auth){
+            navigate('/')
+        }
+    })
 
     const registerUser = async ()=>{
         console.warn(name, email, password);
@@ -18,6 +25,9 @@ const Signup = ()=>{
         })
         result = await result.json()
         console.warn(result)
+
+        localStorage.setItem("user", JSON.stringify(result));
+
         if(result){
             alert("You have been succesfully registered!")
             navigate('/');
