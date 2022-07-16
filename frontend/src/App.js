@@ -3,6 +3,7 @@ import Nav from './Components/Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Signup from './Components/Signup';
 import PrivateComponent from './Components/PrivateComponent';
+import Login from './Components/Login';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
           </Route>
 
           <Route path='/signup' element={<Signup></Signup>}></Route>
-          {/* <Route path='/login'> element={<h1>Login Component</h1>}</Route> */}
+          <Route path='/login' element={<Login></Login>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
