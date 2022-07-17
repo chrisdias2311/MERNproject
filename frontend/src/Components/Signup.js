@@ -7,12 +7,12 @@ const Signup = ()=>{
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        const auth = localStorage.getItem('user');
-        if(auth){
-            navigate('/')
-        }
-    })
+    // useEffect(()=>{
+    //     const auth = localStorage.getItem('user');
+    //     if(auth){
+    //         navigate('/')
+    //     }
+    // })
 
     const registerUser = async ()=>{
         console.warn(name, email, password);
