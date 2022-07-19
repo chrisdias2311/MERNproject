@@ -39,7 +39,7 @@ const ProductList = () => {
         result = await result.json()
         if (result) {
             getProducts()
-            alert("Record is deleted")
+            alert("Record is deleted");
         }
     }
 
