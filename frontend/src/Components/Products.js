@@ -21,6 +21,7 @@ const ProductList = () => {
     const [filterCompSamsung, setFilterCompSamsung] = useState(false);
     const [filterCompAsus, setFilterCompAsus] = useState(false);
     const [filterCompOneplus, setFilterCompOneplus] = useState(false);
+    
 
     useEffect(() => {
         getProducts();
@@ -44,6 +45,7 @@ const ProductList = () => {
     }
 
     const updateProduct = (id) => {
+        const ownerAuth = localStorage.get('owner');
         const pId = id;
         navigate('/updateproduct/' + pId)
         console.warn("updateProduct called")
@@ -464,6 +466,7 @@ const ProductList = () => {
                                         <p>Price: {item.price}$</p>
                                         <Card.Subtitle className="mb-2 text-muted">Category: {item.category}</Card.Subtitle>
                                         <br></br>
+                                        <p>Added by: {item.owner}</p>
                                         <Button className="product-list-buttons" onClick={() => updateProduct(item._id)} variant="secondary">Update</Button>
                                         <Button className="product-list-buttons" onClick={() => deleteProduct(item._id)} variant="danger">Delete</Button>
                                     </Card.Body>

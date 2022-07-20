@@ -12,11 +12,13 @@ const AddProduct = ()=>{
             setError(true);
             return false;
         }
+        const owner = localStorage.getItem('owner');
+        console.warn(owner ,"is the owner");
 
         const userId = JSON.parse(localStorage.getItem('user'))._id;
         let result = await fetch('http://localhost:5000/add-product',{
             method:'post',
-            body:JSON.stringify({name, price, category, company, userId}),
+            body:JSON.stringify({name, price, category, company, userId, owner}),
             headers:{
                 "Content-Type":"application/json"
             }

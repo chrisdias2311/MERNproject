@@ -7,12 +7,9 @@ const Signup = ()=>{
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
-    // useEffect(()=>{
-    //     const auth = localStorage.getItem('user');
-    //     if(auth){
-    //         navigate('/')
-    //     }
-    // })
+    useEffect(()=>{
+        const auth = localStorage.getItem('user');
+    })
 
     const registerUser = async ()=>{
         console.warn(name, email, password);
@@ -27,6 +24,7 @@ const Signup = ()=>{
         console.warn(result)
 
         localStorage.setItem("user", JSON.stringify(result));
+        localStorage.setItem("owner", name);
 
         if(result){
             alert("You have been succesfully registered!")
