@@ -13,7 +13,6 @@ const AddProduct = ()=>{
             return false;
         }
         const owner = localStorage.getItem('owner');
-        console.warn(owner ,"is the owner");
 
         const userId = JSON.parse(localStorage.getItem('user'))._id;
         let result = await fetch('http://localhost:5000/add-product',{
@@ -24,12 +23,19 @@ const AddProduct = ()=>{
             }
         });
         result = await result.json();
-        console.warn(result);
+        alert("Product added successfully");
+        setName('');
+        setPrice('');
+        setCategory('');
+        setCompany('');
     }
 
     return(
         <div>
+            <br></br>
             <h1>Add Product</h1>
+            <br></br>
+            <p className='note'>Please enter the initials of category and company capital!</p>
             <br></br>
             <input className="inputBox" value={name} type="test" onChange={(e)=>{setName(e.target.value)}} placeholder="Enter product name"></input>
             {error && !name &&<span className='invalid-input'>Enter valid name</span>}

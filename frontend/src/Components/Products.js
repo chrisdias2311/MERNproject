@@ -3,8 +3,9 @@ import { Card, Button, Form, Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
     const navigate = useNavigate();
+    const [ownerInfo, setOwnerInfo] = useState("");
 
     const [filterCheck500, setfilterCheck500] = useState(false);
     const [filterCheck1000, setfilterCheck1000] = useState(false);
@@ -21,7 +22,7 @@ const ProductList = () => {
     const [filterCompSamsung, setFilterCompSamsung] = useState(false);
     const [filterCompAsus, setFilterCompAsus] = useState(false);
     const [filterCompOneplus, setFilterCompOneplus] = useState(false);
-    
+
 
     useEffect(() => {
         getProducts();
@@ -33,22 +34,35 @@ const ProductList = () => {
         setProducts(result);
     }
 
-    const deleteProduct = async (id) => {
-        let result = await fetch(`http://localhost:5000/product/${id}`, {
-            method: "Delete"
-        });
-        result = await result.json()
-        if (result) {
-            getProducts()
-            alert("Record is deleted");
+    const deleteProduct = async (id, uId) => {
+        const localUserId = JSON.parse(localStorage.getItem('user'))._id;
+        const userId = uId;
+
+        if (localUserId === userId) {
+            let result = await fetch(`http://localhost:5000/product/${id}`, {
+                method: "Delete"
+            });
+            result = await result.json()
+            if (result) {
+                getProducts()
+                alert("Record is deleted");
+            }
+        } else {
+            alert("Sorry! You don't have access to this product")
         }
     }
 
-    const updateProduct = (id) => {
-        const ownerAuth = localStorage.get('owner');
-        const pId = id;
-        navigate('/updateproduct/' + pId)
-        console.warn("updateProduct called")
+    const updateProduct = (id, uId) => {
+        const localUserId = JSON.parse(localStorage.getItem('user'))._id;
+        const userId = uId;
+
+        if (userId === localUserId) {
+            const pId = id;
+            navigate('/updateproduct/' + pId)
+        } else {
+            alert("Sorry! You don't have access to this product")
+            return false;
+        }
     }
 
     const searchHandle = async (event) => {
@@ -64,6 +78,8 @@ const ProductList = () => {
             getProducts();
         }
     }
+
+
 
 
     const filter500 = (filter) => {
@@ -178,7 +194,7 @@ const ProductList = () => {
         }
     }
 
-    
+
 
     const filterCompanyApple = (compFilter) => {
         if (filterCompApple === false) {
@@ -289,25 +305,25 @@ const ProductList = () => {
 
                         <Dropdown.Menu>
                             <div class="form-check">
-                                <input onClick={() => filterCategoryMobiles("mobile")} type="checkbox" value="" id="flexCheckDefault" />
+                                <input onClick={() => filterCategoryMobiles("Mobile")} type="checkbox" value="" id="flexCheckDefault" />
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Mobile
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input onClick={() => filterCategoryLaptops("laptop")} type="checkbox" value="" id="flexCheckDefault" />
+                                <input onClick={() => filterCategoryLaptops("Laptop")} type="checkbox" value="" id="flexCheckDefault" />
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Laptop
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input onClick={() => filterCategoryHeadphones("headphones")} type="checkbox" value="" id="flexCheckDefault" />
+                                <input onClick={() => filterCategoryHeadphones("Headphones")} type="checkbox" value="" id="flexCheckDefault" />
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Headphones
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input onClick={() => filterCategoryMonitor("monitor")} type="checkbox" value="" id="flexCheckDefault" />
+                                <input onClick={() => filterCategoryMonitor("Monitor")} type="checkbox" value="" id="flexCheckDefault" />
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Monitors
                                 </label>
@@ -342,7 +358,7 @@ const ProductList = () => {
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input onClick={() => filterCompanyAsus("ASUS")} type="checkbox" value="" id="flexCheckDefault" />
+                                <input onClick={() => filterCompanyAsus("Asus")} type="checkbox" value="" id="flexCheckDefault" />
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Asus
                                 </label>
@@ -466,9 +482,9 @@ const ProductList = () => {
                                         <p>Price: {item.price}$</p>
                                         <Card.Subtitle className="mb-2 text-muted">Category: {item.category}</Card.Subtitle>
                                         <br></br>
-                                        <p>Added by: {item.owner}</p>
-                                        <Button className="product-list-buttons" onClick={() => updateProduct(item._id)} variant="secondary">Update</Button>
-                                        <Button className="product-list-buttons" onClick={() => deleteProduct(item._id)} variant="danger">Delete</Button>
+                                        <Card.Subtitle className="mb-2 text-muted">Added by: {item.owner}</Card.Subtitle>
+                                        <Button className="product-list-buttons" onClick={() => updateProduct(item._id, item.userId)} variant="secondary">Update</Button>
+                                        <Button className="product-list-buttons" onClick={() => deleteProduct(item._id, item.userId)} variant="danger">Delete</Button>
                                     </Card.Body>
                                 </Card>
                             </div>

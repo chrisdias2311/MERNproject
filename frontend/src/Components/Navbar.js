@@ -32,7 +32,7 @@ const Navbar1 = () => {
                                 <Nav>
                                     <Link className="nav-bar-link" to="/">Products</Link>
                                     <Link className="nav-bar-link" to="/addproduct">Add Product</Link>
-                                    <Link className="nav-bar-link" to="/updateproduct">Update Product</Link>
+                                    {/* <Link className="nav-bar-link" to="/updateproduct">Update Product</Link> */}
 
 
                                     <NavDropdown title="Settings" id="basic-nav-dropdown">

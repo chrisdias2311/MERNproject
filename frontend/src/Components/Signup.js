@@ -11,8 +11,11 @@ const Signup = ()=>{
         const auth = localStorage.getItem('user');
     })
 
+    const navigetToLogin = ()=>{
+        navigate('/login');
+    }
+
     const registerUser = async ()=>{
-        console.warn(name, email, password);
         let result = await fetch('http://localhost:5000/register',{
             method:'post',
             body: JSON.stringify({name, email, password}),
@@ -21,7 +24,6 @@ const Signup = ()=>{
             },
         })
         result = await result.json()
-        console.warn(result)
 
         localStorage.setItem("user", JSON.stringify(result));
         localStorage.setItem("owner", name);
@@ -34,7 +36,9 @@ const Signup = ()=>{
 
     return(
         <div className="SignUp">
+            <br></br>
             <h1>Signup/Register</h1>
+            <br></br>
 
             <input className="inputBox" type="text" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Enter Name"></input>
             <br></br>
@@ -44,6 +48,7 @@ const Signup = ()=>{
             <br></br>
 
             <button onClick={registerUser} className="appButton">Register</button>
+            <button onClick={navigetToLogin} className="appButton">Go to Login</button>
         </div>
     )
 }

@@ -24,7 +24,6 @@ const UpdateProduct = ()=>{
     }
 
     const updateProduct = async()=>{
-        console.warn(name, price, category, company)
         let result = fetch(`http://localhost:5000/product/${params.id}`, {
             method:'Put',
             body:JSON.stringify({name, price, category, company}),
@@ -32,7 +31,7 @@ const UpdateProduct = ()=>{
                 'Content-Type':"application/json"
             }
         })
-        alert("Product updated succeddfully!")
+        alert("Product updated successfully!")
         navigate("/")
     }
 
