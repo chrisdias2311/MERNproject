@@ -97,9 +97,17 @@ app.get("/search/:key", async(req, resp)=>{
 
 
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 app.get("/", (req, resp) => {
     resp.send(`App is working on port: ${PORT}`)
 })
+
+
+if(process.env.NODE_ENV = "production"){
+    app.use(express.static("frontend/build"));
+}
+
+
+
 
 app.listen(PORT, console.warn(`Server is running on port: ${PORT}`))
